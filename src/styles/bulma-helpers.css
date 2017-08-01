@@ -1,0 +1,12 @@
+.is-centered-image {
+    margin-left: auto; margin-right: auto;
+}
+
+.background-color-initial {
+    background-color: initial!important;
+}
+
+.vertical-align {
+    margin-top: auto;
+    margin-bottom: auto;
+}
