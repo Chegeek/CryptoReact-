@@ -1,16 +1,16 @@
-## Fetch all the coins:
+# 💰 CryptoReact
 
-```
-# Get the response from: https://www.cryptocompare.com/api/data/coinlist/
-data = {} //Paste the response here
-responseData = data.Data
-let allCoins = []
+**CryptoReact** is a real-time dashboard showing the top 120 cryptocurrencies from CoinMarketCap.com
 
-Object.keys(responseData).forEach((d) => {
-    allCoins.push({
-        name: responseData[d].CoinName,
-        image: 'https://www.cryptocompare.com' + responseData[d].ImageUrl,
-    })
-})
+Built as a weekend project, this was a great play around to [React](https://facebook.github.io/react/) and [Bulma](https://bulma.io). 
+This project has been inspired by [CryptoVue](https://www.cryptovue.com/),
+basically the same project, but made in Vue.JS. You can reach me on github or reach the creator of CryptoVue on this github repo.
 
-```
+## How to use
+
+- Clone the repo
+- `$ cd cryptoReact`
+- `$ npm install`
+- `$ npm start`
+
+Your browser should pop up and you are ready to go 🚀

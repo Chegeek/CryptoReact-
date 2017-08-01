@@ -16,7 +16,6 @@ class Header extends Component {
     }
 
     goHome= () => {
-        console.log(this.context.router.history);
         this.context.router.history.push('/');
     };
 
