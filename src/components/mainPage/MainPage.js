@@ -56,7 +56,7 @@ class App extends Component {
     let responseCMC = await axios
       .get('https://api.coinmarketcap.com/v1/ticker/?limit=120')
       .catch(function(error) {
-        console.log(error);
+        console.error(error);
       });
 
     if (!responseCMC) return this.setState({ failed: true, loading: false });
@@ -66,7 +66,7 @@ class App extends Component {
       responseCCcoins = await axios
         .get('https://www.cryptocompare.com/api/data/coinlist/')
         .catch(error => {
-          console.log(error);
+          console.error(error);
           return this.setState({ failed: true, loading: false });
         });
       baseImageUrl = responseCCcoins.data.BaseImageUrl;
