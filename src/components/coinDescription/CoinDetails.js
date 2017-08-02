@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import FontAwesome from 'react-fontawesome';
-import { cryptoCompareIds, fixSymbol } from '../../helpers/helpers';
+import { cryptoCompareIds, fixSymbol, getCMCId } from '../../helpers/helpers';
 import PropTypes from 'prop-types';
 
 import Loader from '../loader/Loader';
@@ -13,7 +13,6 @@ import './CoinDetails.css';
 class CoinDetails extends Component {
   constructor(props) {
     super();
-    console.log(Loader);
 
     this.state = {
       description: {},
@@ -28,6 +27,7 @@ class CoinDetails extends Component {
 
   getSetCoins = async () => {
     let self = this;
+    let responseCC;
 
     let coin_id = this.props.match.params.coin_id.toUpperCase();
     const sanitizedCoin_symbol = (function(coin_id) {
@@ -39,33 +39,38 @@ class CoinDetails extends Component {
 
     let description;
     let tickerResponse = { data: {} };
-    let responseCC = await axios
-      .get(
-        `https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=${coin_id_CC}`,
-      )
-      .catch(function(error) {
-        console.log(error);
-      });
 
-    if (responseCC.status === 200 && responseCC.data.Data) {
-      description = responseCC.data.Data;
-      tickerResponse = await axios
+    if (coin_id_CC)
+      responseCC = await axios
         .get(
-          `https://api.coinmarketcap.com/v1/ticker/${responseCC.data.Data.General.Name.toLowerCase()}/`,
+          `https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=${coin_id_CC}`,
         )
+        .catch(function(error) {
+          console.error(error);
+        });
+
+    if (
+      responseCC &&
+      responseCC.status === 200 &&
+      responseCC.data.Data &&
+      !responseCC.data.Error
+    ) {
+      description = responseCC.data.Data;
+      let name = getCMCId(description.General.Id, description.General.Name);
+      tickerResponse = await axios
+        .get(`https://api.coinmarketcap.com/v1/ticker/${name}/`)
         .catch(error => {
-          console.log(
+          console.error(
             'not found for: ',
-            responseCC.data.Data.General.Name.toLowerCase(),
+            description.General.Name.toLowerCase(),
           );
         });
 
       if (!tickerResponse) {
         // retrying with the symbol
-
         tickerResponse = await axios
           .get(
-            `https://api.coinmarketcap.com/v1/ticker/${responseCC.data.Data.General.Symbol.toLowerCase()}/`,
+            `https://api.coinmarketcap.com/v1/ticker/${description.General.Symbol.toLowerCase()}/`,
           )
           .catch(async function(error) {
             return self.setState({
