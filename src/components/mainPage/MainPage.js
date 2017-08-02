@@ -22,12 +22,29 @@ class App extends Component {
   }
 
   renderTiles = () => {
-    if (!this.state.loading)
+    if (!this.state.loading && !this.state.failed)
       return (
         <CoinTiles
           coins={this.state.coinsTick}
           coinsImg={this.state.coinsImgs}
         />
+      );
+    return null;
+  };
+
+  renderFail = () => {
+    if (this.state.failed)
+      return (
+        <div className="hero-body is-paddingless">
+          <div className="container">
+            <h2 className="title has-text-1 has-text-centered has-text-warning">
+              Oh no! Seems like that internet or Coinmarketcap is not working{' '}
+              <span role="img" aria-label="Sad">
+                😒
+              </span>
+            </h2>
+          </div>
+        </div>
       );
     return null;
   };
@@ -42,12 +59,15 @@ class App extends Component {
         console.log(error);
       });
 
+    if (!responseCMC) return this.setState({ failed: true, loading: false });
+
     if (loadAll) {
       //get the images and IDs for CryptoCompare
       responseCCcoins = await axios
         .get('https://www.cryptocompare.com/api/data/coinlist/')
-        .catch(function(error) {
+        .catch(error => {
           console.log(error);
+          return this.setState({ failed: true, loading: false });
         });
       baseImageUrl = responseCCcoins.data.BaseImageUrl;
       responseCCcoins = responseCCcoins.data.Data;
@@ -68,7 +88,8 @@ class App extends Component {
         else coinsImgs[tick.symbol] = '';
       });
 
-    if (loadAll) this.setState({ coinsTick, coinsImgs, loading: false });
+    if (loadAll)
+      this.setState({ coinsTick, coinsImgs, loading: false, failed: false });
     else this.setState({ coinsTick });
   };
 
@@ -89,6 +110,7 @@ class App extends Component {
         <div className="container">
           <Loader loading={this.state.loading} />
           {this.renderTiles()}
+          {this.renderFail()}
         </div>
       </div>
     );
