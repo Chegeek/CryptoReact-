@@ -6,6 +6,10 @@ Built as a weekend project, this was a great play around to [React](https://face
 This project has been inspired by [CryptoVue](https://www.cryptovue.com/),
 basically the same project, but made in Vue.JS. You can reach me on github or reach the creator of CryptoVue on this github repo.
 
+## Demo
+
+Enjoy ->[https://xunga.github.io/CryptoReact-/](https://xunga.github.io/CryptoReact-/)
+
 ## How to use
 
 - Clone the repo
