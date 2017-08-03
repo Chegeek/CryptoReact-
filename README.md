@@ -18,3 +18,6 @@ Enjoy ->[https://xunga.github.io/CryptoReact-/](https://xunga.github.io/CryptoRe
 - `$ npm start`
 
 Your browser should pop up and you are ready to go 🚀
+
+### Notes:
+The `docs/` folder is for the live demo.
