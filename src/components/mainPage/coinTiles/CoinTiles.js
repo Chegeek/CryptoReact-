@@ -11,6 +11,7 @@ class CoinTiles extends Component {
       <div className="columns is-multiline">
         {this.props.coins.map(coin => {
           const coinImg = this.props.coinsImg[coin.symbol];
+          coin.price_usd = Number(coin.price_usd).toFixed(2)
           return <Tile key={coin.symbol} coin={coin} coinImg={coinImg} />;
         })}
       </div>

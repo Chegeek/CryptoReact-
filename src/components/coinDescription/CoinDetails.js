@@ -88,10 +88,17 @@ class CoinDetails extends Component {
     if (tickerResponse)
       this.setState({
         description,
-        coinData: tickerResponse && tickerResponse.data[0],
+        coinData: this.getConfiguredCoinData(tickerResponse && tickerResponse.data[0]),
         loading: false,
       });
   };
+
+  getConfiguredCoinData = (coinData) => {
+    coinData.price_usd = Number(coinData.price_usd).toFixed(2)
+    coinData.available_supply = Number(coinData.available_supply).toLocaleString( 'en-US' )
+    coinData.market_cap_usd = Number(coinData.market_cap_usd).toLocaleString( 'en-US' )
+    return coinData
+  }
 
   getWebsite = () => {
     if (
