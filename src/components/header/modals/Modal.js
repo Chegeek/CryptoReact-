@@ -32,7 +32,7 @@ class Modal extends React.Component {
                             <p className="has-text-grey-darker">
                                 <span className="has-text-info"> <br/>CryptoReact</span> is a real-time dashboard that
                                 displays
-                                the top 12 cryptocurrencies based on currency price, market capitalization and overall
+                                the top 120 cryptocurrencies based on currency price, market capitalization and overall
                                 circulating supply - obtained from the leading cryptocurrency resource
                                 <a className="has-text-primary" target="_blank" rel="noopener noreferrer"
                                    href="https://coinmarketcap.com/"> CoinMarketCap</a>.
